@@ -1,0 +1,61 @@
+const express = require('express');
+const mysql = require('mysql');
+const bodyParser = require('body-parser')
+const app = express();
+app.use(bodyParser.json())
+
+const client = mysql.createConnection({
+    host: 'localhost',
+    user: 'node',
+    password: 'HashSignBack1484?_!',
+    port : 3306,
+    database: 'sample'
+});
+
+client.connect(function (err) {
+    if (err) {
+        console.error('error connecting: ' + err.stack);
+        return;
+    }
+    console.log('connected as id ' + client.threadId);
+});
+
+// read OK
+app.get('/user', (req, res) => {
+    client.query('SELECT * from user;', (err, rows, fields) => {
+        if (err) throw err;
+      
+        res.send(rows);
+    });
+});
+
+// create ok 
+app.post('/user/create', (req, res) => {
+    const name = req.body.name;
+    const status = req.body.status;
+    client.query('INSERT INTO user SET ?', {name: name, status: status}, (err, result) => {
+        if (err) throw err;
+        res.send(result);
+    })
+});
+
+// update ok
+app.post('/user/update', (req, res) => {
+    const name = req.body.name;
+    const status = req.body.status;
+    client.query('UPDATE user SET status = ? WHERE name = ?', [status, name], (err, result) => {
+        if (err) throw err;
+        res.send(result);
+    })
+});
+
+// delete ok
+app.post('/user/delete', (req, res) => {
+    const name = req.body.name;
+    client.query(`DELETE FROM user WHERE name = ?`, [name], (err, result) => {
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
+app.listen(3000, () => console.log('Listening on port 3000!'))
