@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import {
-    CREATE_USER, UPDATE_USER, DELETE_USER, VIEW_USERS
+    CHANGE_NAME, CHANGE_STATUS, INITIALIZE_FORM
 } from '../actions';
 
 const initialState = {
@@ -14,7 +14,7 @@ const initialState = {
     }
 }
 
-const formReducer = (state = initialState.from, action) => {
+const formReducer = (state = initialState.form, action) => {
     switch(action.type) {
         case CHANGE_NAME:
             return {
