@@ -40,3 +40,9 @@ const usersReducer = (state = initialState.users, action) => {
     }
 }
 
+const rootReducer = combineReducers({
+    form: formReducer,
+    users: usersReducer
+})
+
+export default rootReducer;
