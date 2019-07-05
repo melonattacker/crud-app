@@ -1,8 +1,10 @@
 const express = require('express');
 const mysql = require('mysql');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const cors = require('cors')({origin: true});
 const app = express();
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+app.use(cors);
 
 const client = mysql.createConnection({
     host: 'localhost',
@@ -40,7 +42,7 @@ app.post('/user/create', (req, res) => {
 });
 
 // update ok
-app.post('/user/update', (req, res) => {
+app.put('/user/update', (req, res) => {
     const name = req.body.name;
     const status = req.body.status;
     client.query('UPDATE user SET status = ? WHERE name = ?', [status, name], (err, result) => {
@@ -50,7 +52,7 @@ app.post('/user/update', (req, res) => {
 });
 
 // delete ok
-app.post('/user/delete', (req, res) => {
+app.delete('/user/delete', (req, res) => {
     const name = req.body.name;
     client.query(`DELETE FROM user WHERE name = ?`, [name], (err, result) => {
         if (err) throw err;
@@ -58,4 +60,4 @@ app.post('/user/delete', (req, res) => {
     });
 });
 
-app.listen(3000, () => console.log('Listening on port 3000!'))
+app.listen(3001, () => console.log('Listening on port 3001!'))
