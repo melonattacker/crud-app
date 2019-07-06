@@ -47,7 +47,10 @@ app.put('/user/update', (req, res) => {
     const status = req.body.status;
     client.query('UPDATE user SET status = ? WHERE id = ?', [status, id], (err, result) => {
         if (err) throw err;
-        res.send(result);
+        client.query('SELECT * from user;', (err, rows, fields) => {
+            if (err) throw err;
+            res.send(rows);
+        });
     })
 });
 
@@ -56,7 +59,10 @@ app.delete('/user/delete', (req, res) => {
     const id = req.body.id;
     client.query(`DELETE FROM user WHERE id = ?`, [id], (err, result) => {
         if (err) throw err;
-        res.send(result);
+        client.query('SELECT * from user;', (err, rows, fields) => {
+            if (err) throw err;
+            res.send(rows);
+        });
     });
 });
 
