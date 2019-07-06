@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { changeName, changeStatus, initializeForm } from '../actions';
+import { changeName, changeStatus, initializeForm, requestData, receiveDataSuccess, receiveDataFailed } from '../actions';
 import Form from './Form';
+import List from './List';
 
 class App extends Component {
     render() {
@@ -14,13 +15,19 @@ class App extends Component {
                 name={this.props.name}
                 status={this.props.status}
                 />
+              <List
+                requestData={this.props.requestData}
+                receiveDataSuccess={this.props.receiveDataSuccess}
+                receiveDataFailed={this.props.receiveDataFailed}
+                users={this.props.users}
+                />
             </div>
         )
     }
 } 
 
-const mapDispatchToProps = ({ changeName, changeStatus, initializeForm });
+const mapDispatchToProps = ({ changeName, changeStatus, initializeForm, requestData, receiveDataSuccess, receiveDataFailed });
 
-const mapStateToProps = state => ({ name: state.form.name, status: state.form.status });
+const mapStateToProps = state => ({ name: state.form.name, status: state.form.status, users: state.users.users });
 
 export default connect(mapStateToProps,mapDispatchToProps)(App)
