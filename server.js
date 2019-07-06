@@ -43,9 +43,9 @@ app.post('/user/create', (req, res) => {
 
 // update ok
 app.put('/user/update', (req, res) => {
-    const name = req.body.name;
+    const id = req.body.id;
     const status = req.body.status;
-    client.query('UPDATE user SET status = ? WHERE name = ?', [status, name], (err, result) => {
+    client.query('UPDATE user SET status = ? WHERE id = ?', [status, id], (err, result) => {
         if (err) throw err;
         res.send(result);
     })
@@ -53,8 +53,8 @@ app.put('/user/update', (req, res) => {
 
 // delete ok
 app.delete('/user/delete', (req, res) => {
-    const name = req.body.name;
-    client.query(`DELETE FROM user WHERE name = ?`, [name], (err, result) => {
+    const id = req.body.id;
+    client.query(`DELETE FROM user WHERE id = ?`, [id], (err, result) => {
         if (err) throw err;
         res.send(result);
     });
