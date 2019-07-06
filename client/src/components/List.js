@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const ROOT_ENDPOINT = 'http://localhost:3001';
 
-const List = ({ ustatus, users, isFetching, changeUstatus, requestData, receiveDataSuccess, receiveDataFailed }) => {
+const List = ({ ustatus, users, isFetching, changeUstatus, initializeForm, requestData, receiveDataSuccess, receiveDataFailed }) => {
     const fetchData = () => {
         requestData();
         axios.get(ROOT_ENDPOINT + '/user')
@@ -21,12 +21,14 @@ const List = ({ ustatus, users, isFetching, changeUstatus, requestData, receiveD
         requestData();
         axios({
             method: 'put',
-            url: ROOT_ENDPOINT + '/user/delete',
+            url: ROOT_ENDPOINT + '/user/update',
             data: {
-                id
+                id: id,
+                status: ustatus
             }
         })
         .then(res => {
+            initializeForm();
             const _users = res.data;
             receiveDataSuccess(_users);
         })
@@ -42,7 +44,7 @@ const List = ({ ustatus, users, isFetching, changeUstatus, requestData, receiveD
             method: 'delete',
             url: ROOT_ENDPOINT + '/user/delete',
             data: {
-                id
+                id: id
             }
         })
         .then(res => {

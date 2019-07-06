@@ -16,10 +16,13 @@ class App extends Component {
                 status={this.props.status}
                 />
               <List
+                changeUstatus={this.props.changeUstatus}
+                initializeForm={this.props.initializeForm}
                 requestData={this.props.requestData}
                 receiveDataSuccess={this.props.receiveDataSuccess}
                 receiveDataFailed={this.props.receiveDataFailed}
                 isFetching={this.props.isFetching}
+                ustatus={this.props.ustatus}
                 users={this.props.users}
                 />
             </div>
