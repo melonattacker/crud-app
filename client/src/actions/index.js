@@ -1,5 +1,6 @@
 export const CHANGE_NAME = 'CHANGE_NAME';
 export const CHANGE_STATUS = 'CHANGE_STATUS';
+export const CHANGE_USTATUS = 'CHANGE_USTATUS';
 export const INITIALIZE_FORM = 'INITIALIZE_FORM';
 export const REQUEST_DATA = 'REQUEST_DATA';
 export const RECEIVE_DATA_SUCCESS = 'RECEIVE_DATA_SUCCESS';
@@ -13,6 +14,11 @@ export const changeName = (name) => ({
 export const changeStatus = (status) => ({
     type: CHANGE_STATUS,
     status
+})
+
+export const changeUstatus = (ustatus) => ({
+    type: CHANGE_USTATUS,
+    ustatus
 })
 
 export const initializeForm = () => ({

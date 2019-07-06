@@ -1,13 +1,14 @@
-import { combineReducers } from 'redux'
+import { combineReducers, bindActionCreators } from 'redux'
 import {
-    CHANGE_NAME, CHANGE_STATUS, INITIALIZE_FORM,
+    CHANGE_NAME, CHANGE_STATUS, CHANGE_USTATUS, INITIALIZE_FORM,
     REQUEST_DATA, RECEIVE_DATA_SUCCESS, RECEIVE_DATA_FAILED
 } from '../actions';
 
 const initialState = {
     form: {
         name: '',
-        status: ''
+        status: '',
+        ustatus: ''
     },
     users: {
         isFetching: false,
@@ -26,6 +27,11 @@ const formReducer = (state = initialState.form, action) => {
             return {
                 ...state,
                 status: action.status
+            }
+        case CHANGE_USTATUS: 
+            return {
+                ...state,
+                ustatus: action.ustatus
             }
         case INITIALIZE_FORM:
             return initialState.form

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const ROOT_ENDPOINT = 'http://localhost:3001';
 
-const List = ({ users, isFetching, requestData, receiveDataSuccess, receiveDataFailed }) => {
+const List = ({ ustatus, users, isFetching, changeUstatus, requestData, receiveDataSuccess, receiveDataFailed }) => {
     const fetchData = () => {
         requestData();
         axios.get(ROOT_ENDPOINT + '/user')
@@ -47,6 +47,7 @@ const List = ({ users, isFetching, requestData, receiveDataSuccess, receiveDataF
                             {users.map(user => (
                                 <li key={user.id}>
                                     {`${user.name}: ${user.status}`}
+                                    <input value={ustatus} onChange={e => changeUstatus(e.target.value)} />
                                     <button onClick={() => deleteUser(user.id)}>delete</button>
                                 </li>
                             ))}
