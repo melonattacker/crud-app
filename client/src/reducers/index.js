@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux'
 import {
-    CHANGE_NAME, CHANGE_STATUS, INITIALIZE_FORM
+    CHANGE_NAME, CHANGE_STATUS, INITIALIZE_FORM,
+    REQUEST_DATA, RECEIVE_DATA_SUCCESS, RECEIVE_DATA_FAILED
 } from '../actions';
 
 const initialState = {
     form: {
         name: '',
-        status: ''
+        status: '',
+        ustatus: ''
     },
     users: {
         isFetching: false,
@@ -35,6 +37,22 @@ const formReducer = (state = initialState.form, action) => {
 
 const usersReducer = (state = initialState.users, action) => {
     switch(action.type) {
+        case REQUEST_DATA:
+            return {
+                ...state,
+                isFetching: true
+            }
+        case RECEIVE_DATA_SUCCESS:
+            return {
+                ...state,
+                isFetching: false,
+                users: action.users
+            }
+        case RECEIVE_DATA_FAILED:
+            return {
+                ...state,
+                isFetching: false
+            }
         default: 
             return state;
     }

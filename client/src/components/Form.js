@@ -1,20 +1,46 @@
 import React from 'react';
-import { changeName, changeStatus } from '../actions';
+import axios from 'axios';
 
-import '../App.css';
+const ROOT_ENDPOINT = 'http://localhost:3001';
 
-const Form = ({ changeName, changeStatus }) => {
-   
+const Form = ({ name, status, changeName, changeStatus, initializeForm, requestData, receiveDataSuccess, receiveDataFailed }) => {
+   const createUser = e => {
+       if(name.length > 10 || status.length > 10) {
+           alert('文字数が多いです');
+       } else {
+           e.preventDefault();
+           axios({
+             method: 'post',
+             url: ROOT_ENDPOINT + '/user/create',
+             data: {
+                name: name,
+                status: status
+             }
+           })
+           .then(res => {
+             initializeForm();
+             const _users = res.data;
+             console.log(_users);
+             receiveDataSuccess(_users);
+           })
+           .catch(err => {
+             console.log(err);
+             alert('登録に失敗しました')
+             receiveDataFailed();
+           })
+       }
+    }
+
     return (
-        <div className="App">
-            <form>
+        <div>
+            <form onSubmit={e => createUser(e)}>
                 <label>
                     name:
-                    <input onChange={e => changeName(e.target.value)} />
+                    <input value={name} onChange={e => changeName(e.target.value)} />
                 </label>
                 <label>
                     status:
-                    <input onChange={e => changeStatus(e.target.value)} />
+                    <input value={status} onChange={e => changeStatus(e.target.value)} />
                 </label>
                 <button type="submit">register</button>
             </form>
