@@ -9,18 +9,9 @@ const store = createStore(rootReducer);
 
 console.log(store);
 
-const render = () => {
-  ReactDOM.render (
-    <Provider store={store}>
-        <App />
-    </Provider>
-    ,document.getElementById('root')
-  )
-}
-
-store.subscribe(() => {
-  render()
-  console.log(store.getState().form)  
-})
-
-render()
+ReactDOM.render (
+  <Provider store={store}>
+      <App />
+  </Provider>
+  ,document.getElementById('root')
+)

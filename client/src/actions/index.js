@@ -16,11 +16,6 @@ export const changeStatus = (status) => ({
     status
 })
 
-export const changeUstatus = (ustatus) => ({
-    type: CHANGE_USTATUS,
-    ustatus
-})
-
 export const initializeForm = () => ({
     type: INITIALIZE_FORM
 })

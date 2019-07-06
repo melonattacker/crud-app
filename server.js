@@ -37,7 +37,10 @@ app.post('/user/create', (req, res) => {
     const status = req.body.status;
     client.query('INSERT INTO user SET ?', {name: name, status: status}, (err, result) => {
         if (err) throw err;
-        res.send(result);
+        client.query('SELECT * from user;', (err, rows, fields) => {
+            if (err) throw err;
+            res.send(rows);
+        });
     })
 });
 

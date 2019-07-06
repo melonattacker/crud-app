@@ -3,28 +3,32 @@ import axios from 'axios';
 
 const ROOT_ENDPOINT = 'http://localhost:3001';
 
-const Form = ({ name, status, changeName, changeStatus, initializeForm}) => {
+const Form = ({ name, status, changeName, changeStatus, initializeForm, requestData, receiveDataSuccess, receiveDataFailed }) => {
    const createUser = e => {
-       e.preventDefault();
-       axios({
-           method: 'post',
-           url: ROOT_ENDPOINT + '/user/create',
-           data: {
-               name: name,
-               status: status
-           }
-       })
-       .then(res => {
-           console.log(res);
-           initializeForm();
-           if(res.statusText === "OK") {
-               alert('登録が完了しました')
-           }
-       })
-       .catch(err => {
-           console.log(err);
-           alert('登録に失敗しました')
-        })
+       if(name.length > 10 || status.length > 10) {
+           alert('文字数が多いです');
+       } else {
+           e.preventDefault();
+           axios({
+             method: 'post',
+             url: ROOT_ENDPOINT + '/user/create',
+             data: {
+                name: name,
+                status: status
+             }
+           })
+           .then(res => {
+             initializeForm();
+             const _users = res.data;
+             console.log(_users);
+             receiveDataSuccess(_users);
+           })
+           .catch(err => {
+             console.log(err);
+             alert('登録に失敗しました')
+             receiveDataFailed();
+           })
+       }
     }
 
     return (
