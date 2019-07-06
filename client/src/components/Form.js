@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import '../App.css';
 
 const ROOT_ENDPOINT = 'http://localhost:3001';
 
@@ -29,7 +28,7 @@ const Form = ({ name, status, changeName, changeStatus, initializeForm}) => {
     }
 
     return (
-        <div className="App">
+        <div>
             <form onSubmit={e => createUser(e)}>
                 <label>
                     name:
