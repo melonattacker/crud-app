@@ -17,6 +17,25 @@ const List = ({ ustatus, users, isFetching, changeUstatus, requestData, receiveD
         })
     }
 
+    const updateUser = (id) => {
+        requestData();
+        axios({
+            method: 'put',
+            url: ROOT_ENDPOINT + '/user/delete',
+            data: {
+                id
+            }
+        })
+        .then(res => {
+            const _users = res.data;
+            receiveDataSuccess(_users);
+        })
+        .catch(err => {
+            console.log(err);
+            receiveDataFailed();
+        })
+    }
+
     const deleteUser = (id) => {
         requestData();
         axios({
@@ -48,6 +67,7 @@ const List = ({ ustatus, users, isFetching, changeUstatus, requestData, receiveD
                                 <li key={user.id}>
                                     {`${user.name}: ${user.status}`}
                                     <input value={ustatus} onChange={e => changeUstatus(e.target.value)} />
+                                    <button onClick={() => updateUser(user.id)}>update</button>
                                     <button onClick={() => deleteUser(user.id)}>delete</button>
                                 </li>
                             ))}
