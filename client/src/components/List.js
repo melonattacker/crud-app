@@ -17,6 +17,25 @@ const List = ({ users, isFetching, requestData, receiveDataSuccess, receiveDataF
         })
     }
 
+    const deleteUser = (id) => {
+        requestData();
+        axios({
+            method: 'delete',
+            url: ROOT_ENDPOINT + '/user/delete',
+            data: {
+                id
+            }
+        })
+        .then(res => {
+            const _users = res.data;
+            receiveDataSuccess(_users);
+        })
+        .catch(err => {
+            console.log(err);
+            receiveDataFailed();
+        })
+    }
+
     return (
         <div>
             {
@@ -28,6 +47,7 @@ const List = ({ users, isFetching, requestData, receiveDataSuccess, receiveDataF
                             {users.map(user => (
                                 <li key={user.id}>
                                     {`${user.name}: ${user.status}`}
+                                    <button onClick={() => deleteUser(user.id)}>delete</button>
                                 </li>
                             ))}
                         </ul>
